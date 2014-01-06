@@ -10,7 +10,7 @@ type Page struct {
 	Title string
 }
 
-func handler(w http.ResponseWriter, r *http.Request) {
+func DefaultHandler(w http.ResponseWriter, r *http.Request) {
 	title := r.URL.Path
 	t, _ := template.ParseFiles("index.html")
 	p := &Page{Title: title}
@@ -18,10 +18,18 @@ func handler(w http.ResponseWriter, r *http.Request) {
   }
 
 func main() {
+
+	// Static file server to operate on the directory that calls it
 	static_server := http.FileServer(http.Dir("./"))
+	
+	// A multiplexing router to handle requests
 	router := mux.NewRouter()
-	router.PathPrefix("/assets/").Handler(static_server)
-	router.HandleFunc("/", handler)
+	
+	// Setup routes here
+	router.PathPrefix("/assets/").Handler(static_server) // will serve assets folder
+	router.HandleFunc("/", DefaultHandler) // Fallthrough to DefaultHandler
+	
+	// Serve the multiplexer
 	http.Handle("/", router)
 	http.ListenAndServe(":8080", nil)
 }
