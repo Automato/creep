@@ -6,6 +6,11 @@ import (
 	"github.com/gorilla/mux"
 )
 
+type ImageObject struct {
+	URL string
+	Caption string
+}
+
 type Page struct {
 	Title string
 }

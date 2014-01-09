@@ -12,3 +12,7 @@ body {
   margin-bottom: 10px;
   width: 300px;
 }
+
+#main-bigbox div.masonry-item > img {
+  width: 300px;
+}
