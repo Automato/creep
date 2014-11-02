@@ -6,7 +6,7 @@ import (
 	"github.com/gorilla/mux"
 )
 
-type ImageObject struct {
+type VideoObject struct {
 	URL string
 	Caption string
 }
