@@ -6,11 +6,6 @@ import (
 	"github.com/gorilla/mux"
 )
 
-type VideoObject struct {
-	URL string
-	Caption string
-}
-
 type Page struct {
 	Title string
 }
