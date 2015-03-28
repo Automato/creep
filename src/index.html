@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html
+    lang="en"
+    ><head
+        ><meta
+            charset="utf-8"
+        ><title
+            >Corrugate</title
+        ><script
+            src="https://fb.me/react-0.13.1.js"
+            ></script
+        ><script
+            src="https://fb.me/JSXTransformer-0.13.1.js"
+            ></script
+        ><script
+            src="https://code.jquery.com/jquery-1.10.0.min.js"
+            ></script
+        ></head
+    ><body
+        ><div
+            id="content"
+            ></div
+        ><script
+            type="text/jsx"
+            >
+var CardBoard = React.createClass({
+    render: function() {
+        return (
+            <div>hello!</div>
+        );
+    }
+});
+
+var CARDS = [
+    {category: 'Doing', content: 'Serve static app'},
+    {category: 'Todo', content: 'Get data sync with server'},
+    {category: 'Todo', content: 'Store data'},
+    {category: 'Todo', content: 'Have a login'}
+];
+
+React.render(
+    <CardBoard cards={CARDS} />,
+    document.getElementById('content')
+);
+</script
+        ></body
+    ></html
+>
