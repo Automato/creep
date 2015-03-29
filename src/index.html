@@ -23,24 +23,55 @@
         ><script
             type="text/jsx"
             >
-var CardBoard = React.createClass({
+var Card = React.createClass({
     render: function() {
         return (
-            <div>hello!</div>
+            <div>Card{this.props.card.content}</div>
+        );
+    }
+});
+var CardCategory = React.createClass({
+    render: function() {
+        var cards = [];
+        for (card in this.props.cards) {
+            if (card.category == this.props.category.id) {
+                cards.push(<Card card={card} key={card.id} />);
+            }
+        }
+        return (
+            <div>Category{this.props.category.name}{cards}</div>
         );
     }
 });
 
-var CARDS = [
-    {category: 'Doing', content: 'Serve static app'},
-    {category: 'Todo', content: 'Get data sync with server'},
-    {category: 'Todo', content: 'Store data'},
-    {category: 'Todo', content: 'Have a login'}
-];
+var CardBoard = React.createClass({
+    render: function() {
+        var categories = [];
+        for (category in this.props.state.categories) {
+            categories.push(<CardCategory category={category} cards={this.props.state.cards} key={category.id} />);
+        }
+        return (
+            <div>CardBoard{categories}</div>
+        );
+    }
+});
+
+var STATE = {
+    categories: [
+        {id: 1, name: 'Doing'},
+        {id: 0, name: 'Todo'}
+    ],
+    cards: [
+        {id: 0, category: 1, content: 'Serve static app'},
+        {id: 1, category: 0, content: 'Get data sync with server'},
+        {id: 2, category: 0, content: 'Store data'},
+        {id: 3, category: 0, content: 'Have a login'}
+    ]
+};
 
 React.render(
-    <CardBoard cards={CARDS} />,
-    document.getElementById('content')
+    <CardBoard state={STATE} />,
+    document.body
 );
 </script
         ></body
