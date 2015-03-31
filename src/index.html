@@ -26,14 +26,14 @@
 var Card = React.createClass({
     render: function() {
         return (
-            <li class="c_card">{this.props.card.content}</li>
+            <li className="card">{this.props.card.content}</li>
         );
     }
 });
 var CardCategory = React.createClass({
     render: function() {
         return (
-            <li class="c_category">
+            <li className="category">
                 <h2>{this.props.category.name}</h2>
                 <ul>{
                     this.props.category.cards.map(
@@ -52,7 +52,7 @@ var CardCategory = React.createClass({
 var CardBoard = React.createClass({
     render: function() {
         return (
-            <ul class="c_board">{
+            <ul className="board">{
                 this.props.state.categories.map(
                     function(category) {
                         return <CardCategory key={category.id} category={category} />
