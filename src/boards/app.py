@@ -6,6 +6,13 @@ app.debug = True #FIXME
 app.config['SECRET_KEY'] = '' #TODO: add key
 app.config['STORMPATH_API_KEY_ID'] = ''
 app.config['STORMPATH_API_KEY_SECRET'] = ''
+app.config['STORMPATH_ENABLE_GOOGLE'] = True
+app.config['STORMPATH_SOCIAL'] = {
+    'GOOGLE': {
+        'client_id': '',
+        'client_secret': '',
+    }
+}
 app.config['STORMPATH_APPLICATION'] = ''
 
 stormpath_manager = StormpathManager(app)
@@ -21,17 +28,17 @@ def create_board():
     return "add board here"
 
 @app.route('/<uuid:board_id>', methods=['GET'])
-@login_required:
+@login_required
 def retrieve_board(card_id):
     return "get board here"
 
 @app.route('/<uuid:board_id>', methods=['PATCH', 'PUT'])
-@login_required:
+@login_required
 def replace_board(board_id):
     return "replace board here"
 
 @app.route('/<uuid:board_id>', methods=['DELETE'])
-@login_required:
+@login_required
 def delete_board(board_id):
     return "delete board here"
 
