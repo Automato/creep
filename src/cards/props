@@ -1,4 +1,11 @@
 
 app.config['STORMPATH_API_KEY_ID'] = '3SWHZCWOTM46GUGNW35H88Z3F'
 app.config['STORMPATH_API_KEY_SECRET'] = '1Malxdogn49m41ZHFNxCntD12zLr41crTG3/tCzLi40'
+app.config['STORMPATH_ENABLE_GOOGLE'] = True
+app.config['STORMPATH_SOCIAL'] = {
+    'GOOGLE': {
+        'client_id': '310324583329-mfqrnlhm7dmrpljkol67749bhfisf0dp.apps.googleusercontent.com',
+        'client_secret': 'LASUZpFCItCkL-LJH55JKsfM',
+    }
+}
 app.config['STORMPATH_APPLICATION'] = 'Creep'

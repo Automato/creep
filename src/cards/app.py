@@ -1,12 +1,19 @@
 from flask import Flask
-from flask.ext.stormpath import StormpathManager
+from flask.ext.stormpath import StormpathManager, login_required
 
 app = Flask(__name__)
 app.debug = True #FIXME
 app.config['SECRET_KEY'] = '' #TODO: add key
 app.config['STORMPATH_API_KEY_ID'] = ''
 app.config['STORMPATH_API_KEY_SECRET'] = ''
-app.config['STORMPATH_APPLICATION'] = ''
+app.config['STORMPATH_ENABLE_GOOGLE'] = True
+app.config['STORMPATH_SOCIAL'] = {
+    'GOOGLE': {
+        'client_id': '',
+        'client_secret': '',
+    }
+}
+app.config['STORMPATH_APPLICATION'] = 'Creep'
 
 stormpath_manager = StormpathManager(app)
 
@@ -21,17 +28,17 @@ def create_card():
     return "add card here"
 
 @app.route('/<uuid:card_id>', methods=['GET'])
-@login_required:
+@login_required
 def retrieve_card(card_id):
     return "get card here"
 
 @app.route('/<uuid:card_id>', methods=['PATCH', 'PUT'])
-@login_required:
+@login_required
 def replace_card(card_id):
     return "replace card here"
 
-@app.route('/<uuid:card_id>'. methods=['DELETE'])
-@login_required:
+@app.route('/<uuid:card_id>', methods=['DELETE'])
+@login_required
 def delete_card(card_id):
     return "delete card here"
 
