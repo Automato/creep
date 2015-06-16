@@ -8,18 +8,18 @@ var app = app || {};
 (function () {
 	'use strict';
 
-	app.ALL_TODOS = 'all';
-	app.ACTIVE_TODOS = 'active';
-	app.COMPLETED_TODOS = 'completed';
+	app.ALL_BOARDS = 'all';
+	app.ACTIVE_BOARDS = 'active';
+	app.COMPLETED_BOARDSS = 'completed';
 	var TodoFooter = app.TodoFooter;
-	var TodoItem = app.TodoItem;
+	var Board = app.Board;
 
 	var ENTER_KEY = 13;
 
 	var TodoApp = React.createClass({
 		getInitialState: function () {
 			return {
-				nowShowing: app.ALL_TODOS,
+				nowShowing: app.ALL_BOARDS,
 				editing: null
 			};
 		},
@@ -27,16 +27,16 @@ var app = app || {};
 		componentDidMount: function () {
 			var setState = this.setState;
 			var router = Router({
-				'/': setState.bind(this, {nowShowing: app.ALL_TODOS}),
-				'/active': setState.bind(this, {nowShowing: app.ACTIVE_TODOS}),
-				'/completed': setState.bind(this, {nowShowing: app.COMPLETED_TODOS})
+				'/': setState.bind(this, {nowShowing: app.ALL_BOARDS}),
+				'/active': setState.bind(this, {nowShowing: app.ACTIVE_BOARDS}),
+				'/completed': setState.bind(this, {nowShowing: app.COMPLETED_BOARDS})
 			});
 			router.init('/');
 		},
 
 		handleNewTodoKeyDown: function (event) {
 			if (event.which !== ENTER_KEY) {
-				return;
+					return;
 			}
 
 			event.preventDefault();
@@ -44,7 +44,7 @@ var app = app || {};
 			var val = this.refs.newField.getDOMNode().value.trim();
 
 			if (val) {
-				this.props.model.addTodo(val);
+				this.props.model.addBoard(val);
 				this.refs.newField.getDOMNode().value = '';
 			}
 		},
@@ -54,20 +54,20 @@ var app = app || {};
 			this.props.model.toggleAll(checked);
 		},
 
-		toggle: function (todoToToggle) {
-			this.props.model.toggle(todoToToggle);
+		toggle: function (boardToToggle) {
+			this.props.model.toggle(boardToToggle);
 		},
 
-		destroy: function (todo) {
-			this.props.model.destroy(todo);
+		destroy: function (board) {
+			this.props.model.destroy(board);
 		},
 
-		edit: function (todo) {
-			this.setState({editing: todo.id});
+		edit: function (board) {
+			this.setState({editing: board.id});
 		},
 
-		save: function (todoToSave, text) {
-			this.props.model.save(todoToSave, text);
+		save: function (boardToSave, text) {
+			this.props.model.save(boardToSave, text);
 			this.setState({editing: null});
 		},
 
@@ -82,9 +82,9 @@ var app = app || {};
 		render: function () {
 			var footer;
 			var main;
-			var todos = this.props.model.todos;
+			var boards = this.props.model.boards;
 
-			var shownTodos = todos.filter(function (todo) {
+			var shownBoards = boards.filter(function (boards) {
 				switch (this.state.nowShowing) {
 				case app.ACTIVE_TODOS:
 					return !todo.completed;
@@ -95,28 +95,28 @@ var app = app || {};
 				}
 			}, this);
 
-			var todoItems = shownTodos.map(function (todo) {
+			var boards = shownTodos.map(function (board) {
 				return (
-					<TodoItem
-						key={todo.id}
-						todo={todo}
-						onToggle={this.toggle.bind(this, todo)}
-						onDestroy={this.destroy.bind(this, todo)}
-						onEdit={this.edit.bind(this, todo)}
-						editing={this.state.editing === todo.id}
-						onSave={this.save.bind(this, todo)}
+					<Board
+						key={board.id}
+						board={board}
+						onToggle={this.toggle.bind(this, board)}
+						onDestroy={this.destroy.bind(this, board)}
+						onEdit={this.edit.bind(this, board)}
+						editing={this.state.editing === board.id}
+						onSave={this.save.bind(this, board)}
 						onCancel={this.cancel}
 					/>
 				);
 			}, this);
 
-			var activeTodoCount = todos.reduce(function (accum, todo) {
-				return todo.completed ? accum : accum + 1;
+			var activeBoardCount = boards.reduce(function (accum, board) {
+				return board.completed ? accum : accum + 1;
 			}, 0);
 
-			var completedCount = todos.length - activeTodoCount;
+			var completedCount = board.length - activeTodoCount;
 
-			if (activeTodoCount || completedCount) {
+			if (activeBoardCount || completedCount) {
 				footer =
 					<TodoFooter
 						count={activeTodoCount}
@@ -135,8 +135,8 @@ var app = app || {};
 							onChange={this.toggleAll}
 							checked={activeTodoCount === 0}
 						/>
-						<ul id="todo-list">
-							{todoItems}
+						<ul id="board-list">
+							{BoardItems}
 						</ul>
 					</section>
 				);
@@ -161,7 +161,7 @@ var app = app || {};
 		}
 	});
 
-	var model = new app.TodoModel('react-todos');
+	var model = new app.BoardModel('react-boards');
 
 	function render() {
 		React.render(
