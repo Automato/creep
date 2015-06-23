@@ -3,8 +3,26 @@ import tornado.web
 
 class CardHandler(tornado.web.RequestHandler):
 	
+	def delete(self):
+		self.write("Delete goes here")
+	
 	def get(self):
-		self.write("Hello World!")
+		self.write("Get goes here")
+		
+	def head(self):
+		self.write("Head goes here")
+		
+	def options(self):
+		self.write("Options goes here")
+		
+	def patch(self):
+		self.write("Patch goes here")
+		
+	def post(self):
+		self.write("Post goes here")
+	
+	def put(self):
+		self.write("Put goes here")
 
 
 def main():
