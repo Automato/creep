@@ -7,7 +7,9 @@ class CardHandler(tornado.web.RequestHandler):
 		self.write("Delete goes here")
 	
 	def get(self):
-		self.write("Get goes here")
+		self.set_status(204)
+		self.set_header('Accept', 'GET, HEAD, OPTIONS, POST')
+		raise tornado.web.Finish()
 		
 	def head(self):
 		self.write("Head goes here")
