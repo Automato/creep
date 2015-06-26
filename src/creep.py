@@ -6,7 +6,7 @@ class CardHandler(tornado.web.RequestHandler):
 	def delete(self):
 		self.write("Delete goes here")
 	
-	def get(self):
+	def get(self, card_id=None):
 		self.set_status(204)
 		self.set_header('Accept', 'GET, HEAD, OPTIONS, POST')
 		raise tornado.web.Finish()
@@ -30,6 +30,7 @@ class CardHandler(tornado.web.RequestHandler):
 def main():
 	routes = [
 		(r'/cards', CardHandler),
+		(r'/cards/(?P<card_id>[^\/]+)' CardHandler)
 	]
 	application = tornado.web.Application(routes)
 	application.listen(80)
