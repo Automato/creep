@@ -3,7 +3,13 @@ import tornado.ioloop
 import tornado.web
 import tornado.escape
 
+
 ghetto_db = {}
+
+
+class APIHandler(tornado.web.RequestHandler):
+	pass
+
 
 class CardHandler(tornado.web.RequestHandler):
 	
@@ -19,7 +25,7 @@ class CardHandler(tornado.web.RequestHandler):
 				self.write({'error': 'card id not found'})
 		else:
 			self.set_status(405)
-			self.write({'error': 'DELTE not allowed without card id'})
+			self.write({'error': 'DELETE not allowed without card id'})
 
 		raise tornado.web.Finish()
 	
@@ -45,13 +51,16 @@ class CardHandler(tornado.web.RequestHandler):
 		if card_id:
 			if card_id in ghetto_db:
 				self.set_status(200)
-				self.set_header('Content-Length', len(tornado.escape.encode(ghetto_db[card_id])))
+				self.set_header('Content-Length',
+					len(tornado.escape.json_encode(ghetto_db[card_id])))
 			else:
 				self.set_status(404)
-				self.set_header('Content-Length', len(tornado.escape.encode({'error': 'card id not found'})))
+				self.set_header('Content-Length',
+					len(tornado.escape.json_encode({'error': 'card id not found'})))
 		else:
 			self.set_status(200)
-			self.set_header('Content-Length', len(tornado.escape.encode(ghetto_db)))
+			self.set_header('Content-Length',
+					len(tornado.escape.json_encode(ghetto_db)))
 
 		raise tornado.web.Finish()
 		
@@ -127,10 +136,23 @@ class CardHandler(tornado.web.RequestHandler):
 		raise tornado.web.Finish()
 
 
+class CategoryHandler(tornado.web.RequestHandler):
+	pass
+
+
+class BoardHandler(tornado.web.RequestHandler):
+	pass
+
+
 def main():
 	routes = [
+		(r'/', APIHandler),
 		(r'/cards', CardHandler),
-		(r'/cards/(?P<card_id>[^\/]+)', CardHandler)
+		(r'/cards/(?P<card_id>[^\/]+)', CardHandler),
+		(r'/categories', CategoryHandler),
+		(r'/categories/(?P<category_id>[^\/]+)', CategoryHandler),
+		(r'/boards', BoardHandler),
+		(r'/boards/(?P<board_id>[^\/]+)', BoardHandler),
 	]
 	application = tornado.web.Application(routes)
 	application.listen(80)
@@ -139,3 +161,4 @@ def main():
 
 if __name__ == "__main__":
 	main()
+

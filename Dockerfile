@@ -6,7 +6,7 @@ WORKDIR /usr/local/creep
 COPY requirements.txt /usr/local/creep/
 RUN pip install -v -r requirements.txt
 
-COPY . /usr/local/creep
 EXPOSE 80
+COPY . /usr/local/creep
 
 CMD ["python", "./src/creep.py"]
