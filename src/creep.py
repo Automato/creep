@@ -165,7 +165,39 @@ class CardHandler(tornado.web.RequestHandler):
 
 
 class CategoryHandler(tornado.web.RequestHandler):
-	pass
+
+	def delete(self):
+		self.set_status(405)
+		self.write({'error': 'DELETE not allowed on API root'})
+
+	def get(self):
+		self.set_status(200)
+		self.write({'card_url': '/cards{/cardId}'})
+
+	def head(self):
+		self.set_status(200)
+		self.set_header('Content-Length',
+			len(tornado.escape.json_encode({'cards_url': '/cards{/cardId}'}))
+		raise self.tornado.web.Finish()
+
+	def options(self):
+		self.set_status(200)
+		self.set_headers('Accept', 'GET, HEAD, OPTIONS')
+
+	def patch(self):
+		self.set_status(403)
+		self.write({'error': 'PATCH not allowed on API root'})
+
+	def post(self):
+		self.set_status(405)
+		self.write({'error': 'POST not allowed on API root'})
+
+	def put(self):
+		self.set_status(405)
+		self.write({'error': 'PUT not allowed om API root'})
+		
+
+class CardHandler(tornado.web.RequestHandler):
 
 
 class BoardHandler(tornado.web.RequestHandler):
