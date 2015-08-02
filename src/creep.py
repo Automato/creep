@@ -4,22 +4,36 @@ import tornado.web
 import tornado.escape
 
 
-ghetto_db = {}
+ghetto_db = {
+    'cards': {},
+    'categories': {},
+    'boards': {},
+}
 
 
 class APIHandler(tornado.web.RequestHandler):
+
     def delete(self):
         self.set_status(405)
         self.write({'error': 'DELETE not allowed on API root'})
 
     def get(self):
         self.set_status(200)
-        self.write({'card_url': '/cards{/cardId}'})
+        self.write({
+            'cardURL': '/cards{/cardId}',
+            'categoryURL': '/categories{/categoryId}',
+            'boardURL': '/boards{/boardId}',
+        })
 
     def head(self):
         self.set_status(200)
         self.set_header('Content-Length',
-            len(tornado.escape.json_encode({'cards_url': '/cards{/cardId}'}))
+            len(tornado.escape.json_encode({
+                'cardURL': '/cards{/cardId}',
+                'categoryURL': '/categories{/categoryId}',
+                'boardURL': '/boards{/boardId}',
+            }))
+        )
         raise self.tornado.web.Finish()
 
     def options(self):
@@ -166,19 +180,59 @@ class CardHandler(tornado.web.RequestHandler):
 
 class CategoryHandler(tornado.web.RequestHandler):
 
-    def delete(self):
-        self.set_status(405)
-        self.write({'error': 'DELETE not allowed on API root'})
+    def delete(self, category_id=None):
+        global ghetto_db
 
-    def get(self):
-        self.set_status(200)
-        self.write({'card_url': '/cards{/cardId}'})
+        if category_id:
+            if category_id in ghetto_db['categories']:
+                self.set_status(200)
+                self.write(ghetto_db['categories'].pop(card_id))
+            else:
+                self.set_status(404)
+                self.write({'error': 'category id not found'})
+        else:
+            self.set_status(405)
+            self.write({'error': 'DELETE not allowed without category id'})
 
-    def head(self):
-        self.set_status(200)
-        self.set_header('Content-Length',
-            len(tornado.escape.json_encode({'cards_url': '/cards{/cardId}'}))
-        raise self.tornado.web.Finish()
+        raise tornado.web.Finish()
+
+    def get(self, category_id=None):
+        global ghetto_db
+
+        if category_id:
+            if category_id in ghetto_db['categories']:
+                self.set_status(200)
+                self.write(ghetto_db['categories'][card_id])
+            else:
+                self.set_status(404)
+                self.write({'error': 'category id not found'})
+        else:
+            self.set_status(200)
+            self.write(ghetto_db['categories'])
+
+        raise tornado.web.Finish()
+
+    def head(self, category_id=None):
+        global ghetto_db
+
+        if category_id:
+            if category_id in ghetto_db['categories']:
+                self.set_status(200)
+                self.set_header('Content-Length',
+                    len(tornado.escape.json_encode(ghetto_db['cateogies'][category_id]))
+                )
+            else:
+                self.set_status(404)
+                self.set_header('Content-Length',
+                    len(tornado.escape.json_encode({'error': 'category id not found'}))
+                )
+        else:
+            self.set_status(200)
+            self.set_header('Content-Length',
+                len(tornado.escape.json_encode(ghetto_db['cards']))
+            )
+
+        raise tornado.web.Finish()
 
     def options(self):
         self.set_status(200)
@@ -199,7 +253,9 @@ class CategoryHandler(tornado.web.RequestHandler):
 
 class BoardHandler(tornado.web.RequestHandler):
 
-
+    def delete(self):
+        self.set_status(405)
+        self.write({'error': 'DELETE not allowed on boards root'})
 
 
 def main():
