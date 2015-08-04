@@ -1,2 +1,2 @@
-def fail_test():
-    assert false
+def test_fail():
+    assert False
