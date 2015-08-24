@@ -3,6 +3,25 @@ from json import JSONDecodeError
 import tornado.ioloop
 import tornado.web
 import tornado.escape
+import .db.model
+
+
+class Card(db.model):
+    
+    def __init__(self):
+        pass
+    
+    def create(self):
+        pass
+    
+    def delete(self):
+        pass
+    
+    def update(self):
+        pass
+    
+    def read(self):
+        pass
 
 class CardHandler(tornado.web.RequestHandler):
 
