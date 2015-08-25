@@ -12,6 +12,11 @@ ghetto_db = {
     'boards': {},
 }
 
+class CreepApplication(tornado.web.Application):
+    pass
+
+class BaseCreepHandler(tornado.web.RequestHandler):
+    pass
 
 def main():
     routes = [
