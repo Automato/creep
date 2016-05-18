@@ -33,7 +33,7 @@ defmodule Creep.Endpoint do
   plug Plug.Session,
     store: :cookie,
     key: "_creep_key",
-    signing_salt: "iyGx9OdG"
+    signing_salt: "jgKnZ1NH"
 
   plug Creep.Router
 end

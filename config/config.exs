@@ -9,7 +9,7 @@ use Mix.Config
 config :creep, Creep.Endpoint,
   url: [host: "localhost"],
   root: Path.dirname(__DIR__),
-  secret_key_base: "LxmrIaBcd9h+psEGlr0T1RwaBMLfueeW91Jr8jmWWMTAdVxULuCDyw9yfSxqgGMg",
+  secret_key_base: "gCFdmt1BQLDgOHL4/H/VMD4McNWxRMj9D51smkT6Q9jI6pvz7JkMao/IvfzGC1oJ",
   render_errors: [accepts: ~w(html json)],
   pubsub: [name: Creep.PubSub,
            adapter: Phoenix.PubSub.PG2]
