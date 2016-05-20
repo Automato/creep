@@ -11,6 +11,8 @@ defmodule Creep.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+    plug Guardian.Plug.VerifyHeader
+    plug Guardian.Plug.LoadResource
   end
 
   scope "/", Creep do
@@ -23,7 +25,9 @@ defmodule Creep.Router do
      pipe_through :api
 
      scope "v1" do
+       get "/me", MeController, :show
        post "/registrations", RegistrationController, :create
+       resource "/sessions", SessionController, only: [:create, :delete]
      end
    end
 end
