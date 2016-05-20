@@ -1,7 +1,7 @@
 defmodule Creep.Session do
   alias Creep.{Repo, User}
 
-  def authenticate(%{"email" =>, "password" => password}) do
+  def authenticate(%{"email" => email, "password" => password}) do
     user = Repo.get_by(User, email: String.downcase(email))
 
     case check_password(user, password) do

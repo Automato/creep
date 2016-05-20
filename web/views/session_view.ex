@@ -1,5 +1,5 @@
 defmodule Creep.SessionView do
-  use Creep.Web :view
+  use Creep.Web, :view
 
   def render("show.json", %{jwt: jwt, user: user}) do
     %{

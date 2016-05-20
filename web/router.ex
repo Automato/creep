@@ -27,7 +27,10 @@ defmodule Creep.Router do
      scope "v1" do
        get "/me", MeController, :show
        post "/registrations", RegistrationController, :create
-       resource "/sessions", SessionController, only: [:create, :delete]
+
+       # This delete is accross the collection, which is why resource is not used
+       delete "/sessions", SessionController, :delete
+       post "/sessions", SessionController, :create
      end
    end
 end

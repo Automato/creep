@@ -28,9 +28,9 @@ config :phoenix, :generators,
   migration: true,
   binary_id: false
 
-config :guardian Guardian,
-  issuer: "Creep"
+config :guardian, Guardian,
+  issuer: "Creep",
   ttl: { 3, :days },
   verify_issuer: true,
-  secret_key: "gCFdmt1BQLDgOHL4/H/VMD4McNWxRMj9D51smkT6Q9jI6pvz7JkMao/IvfzGC1oJ"
+  secret_key: "gCFdmt1BQLDgOHL4/H/VMD4McNWxRMj9D51smkT6Q9jI6pvz7JkMao/IvfzGC1oJ",
   serializer: Creep.GuardianSerializer

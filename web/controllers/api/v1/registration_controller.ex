@@ -8,7 +8,7 @@ defmodule Creep.RegistrationController do
   def create(conn, %{"user" => user_params}) do
     changeset = User.changeset(%User{}, user_params)
 
-    cas Repo.insert(changeset) do
+    case Repo.insert(changeset) do
       {:ok, user} ->
         {:ok, jwt, _full_claims} = Guardian.encode_and_sign(user, :token)
 

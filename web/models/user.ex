@@ -10,13 +10,15 @@ defmodule Creep.User do
     field :encrypted_password, :string
     field :password, :string, virtual: true
 
+    has_many :owned_boards, Creep.Board
+
     timestamps
   end
 
   @required_fields ~w(name, email, password)
   @optional_fields ~w(encrypted_password)
 
-  def changeset(mode, params \\ :empty) do
+  def changeset(model, params \\ :empty) do
     model
     |> cast(params, @required_fields, @optional_fields)
     |> validate_format(:email, ~r/@/)
@@ -26,7 +28,7 @@ defmodule Creep.User do
     |> generate_encrypted_password
   end
 
-  defp generate_encrypted_password do
+  defp generate_encrypted_password(current_changeset) do
     case current_changeset do
       %Ecto.Changeset{valid?: true, changes: %{password: password}} ->
         put_change(current_changeset, :encrypted_password, Comeonin.Bcrypt.hashpwsalt(password))
