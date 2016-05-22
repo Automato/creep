@@ -15,7 +15,7 @@ defmodule Creep.User do
     timestamps
   end
 
-  @required_fields ~w(name, email, password)
+  @required_fields ~w(name email password)
   @optional_fields ~w(encrypted_password)
 
   def changeset(model, params \\ :empty) do

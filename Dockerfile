@@ -31,7 +31,17 @@ RUN curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-
 ##########
 
 #########
+# We Depend on Postgres
+RUN apt-get -yq install --no-install-recommends \
+        libpq-dev \
+    && rm -rf /var/lib/apt/lists/*
+#########
+
+#########
 # It's buildin' time
 RUN yes | mix deps.get
 RUN npm install
 COPY ./ /opt/creep
+
+RUN mix compile
+CMD mix phoenix.server

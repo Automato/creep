@@ -15,12 +15,6 @@ defmodule Creep.Router do
     plug Guardian.Plug.LoadResource
   end
 
-  scope "/", Creep do
-    pipe_through :browser # Use the default browser stack
-
-    get "/", PageController, :index
-  end
-
   scope "/api", Creep do
      pipe_through :api
 
@@ -33,4 +27,11 @@ defmodule Creep.Router do
        post "/sessions", SessionController, :create
      end
    end
+
+  scope "/", Creep do
+    pipe_through :browser # Use the default browser stack
+
+    get "*page", PageController, :index
+  end
+
 end
