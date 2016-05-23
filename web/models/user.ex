@@ -10,7 +10,8 @@ defmodule Creep.User do
     field :encrypted_password, :string
     field :password, :string, virtual: true
 
-    has_many :owned_boards, Creep.Board
+    has_one :board_list, Creep.BoardList
+    has_many :groups, Creep.Board 
 
     timestamps
   end

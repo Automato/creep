@@ -1,5 +1,5 @@
 defmodule Creep.List do
-  use Creep,Web, :model
+  use Creep.Web, :model
 
   alias Creep.{Board, Repo, Card}
 

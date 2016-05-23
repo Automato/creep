@@ -1,17 +1,20 @@
-defmodule Creep.Board do
+defmodule Creep.Comment do
   use Creep.Web, :model
+
+  alias __MODULE__
 
   @primary_key {:id, Ecto.UUID, autogenerate: true}
   @derive {Poison.Encoder, only: [:id, :name, :user]}
-  schema "boards" do
-    field :name, :string
+  schema "comments" do
+    field :content, :string
 
-    belongs_to :user, Creep.BoardList
+    belongs_to :card, Card
+    belongs_to :user, User
 
     timestamps
   end
 
-  @required_fields ~w(name user_id)
+  @required_fields ~w(content card_id user_id)
   @optional_fields ~w()
 
   def changeset(model, params \\ :empty) do
